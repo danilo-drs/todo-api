@@ -1,7 +1,7 @@
 const httpStatus = require('./enum/httpStatus');
 
 const mountError = err => ({
-  key: err || 'UNESPECTED_ERROR',
+  key: err.key || 'UNESPECTED_ERROR',
   date: new Date().toISOString(),
   message: err.message || '',
   details: err.details || err,

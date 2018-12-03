@@ -4,6 +4,15 @@
     "version": "1.0.0",
     "title": "Swagger Subpath Example"
   },
+  "parameters": {
+    "user": {
+      "name": "user",
+      "in": "header",
+      "description": "Application User",
+      "required": true,
+      "type": "string"
+    }
+  },
   "paths": {
     "/lists": {
       "x-swagger-router-controller": "list",
@@ -14,6 +23,11 @@
         "summary": "Returns an array of Lists",
         "description": "Get to do lists",
         "operationId": "get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/user"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns a List array",
