@@ -1,5 +1,7 @@
 const models = require('../models');
 
+const { Op } = models.sequelize;
+
 class ListRepository {
   constructor() {
     const {
@@ -15,12 +17,18 @@ class ListRepository {
   }
 
   read({ code, user }) {
-    const where = [];
+    const conditions = [];
+    let where;
     if (user) {
-      where.push({ user });
+      conditions.push({ user });
     }
     if (code) {
-      where.push({ code });
+      conditions.push({ code });
+    }
+    if (conditions.length < 2) {
+      [where] = conditions;
+    } else {
+      where = { [Op.and]: [...conditions] };
     }
     return this.list.findAll({ where });
   }
@@ -31,7 +39,7 @@ class ListRepository {
   }
 
   delete(code) {
-    return this.list.delete(code);
+    return this.list.destroy({ where: { code } });
   }
 }
 
