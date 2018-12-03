@@ -4,12 +4,8 @@ const { Op } = models.sequelize;
 
 class ListRepository {
   constructor() {
-    const {
-      list,
-      item,
-    } = models;
+    const { list } = models;
     this.list = list;
-    this.item = item;
   }
 
   create(data) {
@@ -34,12 +30,25 @@ class ListRepository {
   }
 
   update(data) {
-    const { code, name } = data;
-    return this.list.update({ name }, { where: { code } });
+    const { code, name, user } = data;
+    return this.list.update({ name }, {
+      where: {
+        [Op.and]: [
+          { code },
+          { user },
+        ],
+      },
+    });
   }
 
-  delete(code) {
-    return this.list.destroy({ where: { code } });
+  delete(code, user) {
+    return this.list.destroy({
+      where: {
+        [Op.and]: [
+          { code },
+          { user }],
+      },
+    });
   }
 }
 

@@ -1,59 +1,57 @@
-const listBO = require('../BO/ListBO');
+const itemBO = require('../BO/ItemBO');
 const httpStatus = require('../util/enum/httpStatus');
 const errorHandler = require('../util/errorHandler');
 
-const execGET = async ({ code, user, res }) => {
+const get = async (req, res) => {
+  const {
+    user: { value: user },
+    code: { value: listCode },
+  } = req.swagger.params;
   try {
-    const data = await listBO.get({ code, user });
-    res.status(httpStatus.OK).json(data);
+    const data = await itemBO.get({ listCode, user });
+    return res.status(httpStatus.OK).json(data);
   } catch (error) {
-    errorHandler(error, res);
+    return errorHandler(error, res);
   }
 };
-const get = (req, res) => {
-  const { value: user } = req.swagger.params.user;
-  execGET({ user, res });
-};
 
-const getList = async (req, res) => {
-  const { user: { value: user }, code: { value: code } } = req.swagger.params;
-  execGET({ code, user, res });
-};
 const execSetData = async ({
   data, user, operation, res,
 }) => {
-  if (!data.name) {
+  if (!data.description) {
     return errorHandler({
       key: 'INVALID_PARAMETER',
-      message: 'Parameter "data.name" is invalid',
+      message: 'Parameter "data.description" is invalid',
       status: httpStatus.BAD_REQUEST,
     }, res);
   }
   try {
-    const list = await listBO[operation]({ ...data, user });
+    const item = await itemBO[operation]({ ...data, user });
     if (operation === 'create') {
-      return res.status(httpStatus.CREATED).json(list);
+      return res.status(httpStatus.CREATED).json(item);
     }
     return res.send(httpStatus.NO_CONTENT);
   } catch (error) {
     return errorHandler(error, res);
   }
 };
+
 const post = async (req, res) => {
   const {
-    user: { value: user },
     data: { value: data },
+    user: { value: user },
+    code: { value: listCode },
   } = req.swagger.params;
   execSetData({
-    data, user, operation: 'create', res,
+    data: { ...data, listCode }, user, operation: 'create', res,
   });
 };
 
 const patch = async (req, res) => {
   const {
-    user: { value: user },
     data: { value: data },
-    code: { value: code },
+    user: { value: user },
+    itemCode: { value: code },
   } = req.swagger.params;
   execSetData({
     data: { ...data, code }, user, operation: 'update', res,
@@ -63,19 +61,19 @@ const patch = async (req, res) => {
 const destroy = async (req, res) => {
   const {
     user: { value: user },
-    code: { value: code },
+    itemCode: { value: code },
   } = req.swagger.params;
   try {
-    listBO.destroy(code, user);
+    await itemBO.destroy(code, user);
     return res.send(httpStatus.NO_CONTENT);
   } catch (error) {
     return errorHandler(error, res);
   }
 };
+
 module.exports = {
   get,
   post,
-  getList,
   patch,
   destroy,
 };

@@ -14,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       field: 'done',
     },
+    listCode: {
+      type: DataTypes.UUID,
+      field: 'listCode',
+    },
+    user: {
+      type: DataTypes.STRING,
+      field: 'user',
+    },
   }, {
     timestamps: false,
     tableName: 'Item',

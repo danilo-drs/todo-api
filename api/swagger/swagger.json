@@ -213,7 +213,7 @@
       }
     },
     "/list/{code}/items": {
-      "x-swagger-router-controller": "list",
+      "x-swagger-router-controller": "item",
       "parameters": [
         {
           "name": "code",
@@ -222,6 +222,9 @@
           "description": "List code",
           "type": "string",
           "format": "uuid"
+        },
+        {
+          "$ref": "#/parameters/user"
         }
       ],
       "get": {
@@ -230,7 +233,7 @@
         ],
         "summary": "Returns all items from a List",
         "description": "Get to do list items by code",
-        "operationId": "getItems",
+        "operationId": "get",
         "responses": {
           "200": {
             "description": "Returns List Items array",
@@ -260,7 +263,7 @@
       }
     },
     "/list/{code}/item": {
-      "x-swagger-router-controller": "list",
+      "x-swagger-router-controller": "item",
       "parameters": [
         {
           "name": "code",
@@ -269,13 +272,16 @@
           "description": "List code",
           "type": "string",
           "format": "uuid"
+        },
+        {
+          "$ref": "#/parameters/user"
         }
       ],
       "post": {
         "tags": [
           "Item"
         ],
-        "operationId": "postItem",
+        "operationId": "post",
         "summary": "Creates a List Item",
         "description": "creates one list detail",
         "parameters": [
@@ -315,12 +321,28 @@
             }
           }
         }
-      },
+      }
+    },
+    "/item/{itemCode}": {
+      "x-swagger-router-controller": "item",
+      "parameters": [
+        {
+          "name": "itemCode",
+          "in": "path",
+          "required": true,
+          "description": "Item code",
+          "type": "string",
+          "format": "uuid"
+        },
+        {
+          "$ref": "#/parameters/user"
+        }
+      ],
       "patch": {
         "tags": [
           "Item"
         ],
-        "operationId": "patchItem",
+        "operationId": "patch",
         "summary": "Updates a List Item",
         "description": "updates one list detail",
         "parameters": [
@@ -357,25 +379,12 @@
             }
           }
         }
-      }
-    },
-    "/item/{itemCode}": {
-      "x-swagger-router-controller": "list",
-      "parameters": [
-        {
-          "name": "itemCode",
-          "in": "path",
-          "required": true,
-          "description": "Item code",
-          "type": "string",
-          "format": "uuid"
-        }
-      ],
+      },
       "delete": {
         "tags": [
           "Item"
         ],
-        "operationId": "deleteItem",
+        "operationId": "destroy",
         "summary": "Deletes a List Item",
         "description": "Deletes one list detail",
         "responses": {
