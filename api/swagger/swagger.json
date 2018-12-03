@@ -1,0 +1,460 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Subpath Example"
+  },
+  "paths": {
+    "/lists": {
+      "x-swagger-router-controller": "list",
+      "get": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Returns an array of Lists",
+        "description": "Get to do lists",
+        "operationId": "get",
+        "responses": {
+          "200": {
+            "description": "Returns a List array",
+            "schema": {
+              "$ref": "#/definitions/Lists"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/list": {
+      "x-swagger-router-controller": "list",
+      "post": {
+        "tags": [
+          "List"
+        ],
+        "operationId": "post",
+        "summary": "Creates an List",
+        "description": "creates an list header",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "List to be saved",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/list/{code}": {
+      "x-swagger-router-controller": "list",
+      "parameters": [
+        {
+          "name": "code",
+          "in": "path",
+          "required": true,
+          "description": "List code",
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "get": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Returns one List",
+        "description": "Get to do list by code",
+        "operationId": "getList",
+        "responses": {
+          "200": {
+            "description": "Returns one List object",
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "List"
+        ],
+        "operationId": "patch",
+        "summary": "Updates an List",
+        "description": "Updates an list header",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "List to be saved",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "List"
+        ],
+        "operationId": "delete",
+        "summary": "Deletes an List",
+        "description": "Deletes an list header",
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/list/{code}/items": {
+      "x-swagger-router-controller": "list",
+      "parameters": [
+        {
+          "name": "code",
+          "in": "path",
+          "required": true,
+          "description": "List code",
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Returns all items from a List",
+        "description": "Get to do list items by code",
+        "operationId": "getItems",
+        "responses": {
+          "200": {
+            "description": "Returns List Items array",
+            "schema": {
+              "$ref": "#/definitions/Items"
+            }
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/list/{code}/item": {
+      "x-swagger-router-controller": "list",
+      "parameters": [
+        {
+          "name": "code",
+          "in": "path",
+          "required": true,
+          "description": "List code",
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Item"
+        ],
+        "operationId": "postItem",
+        "summary": "Creates a List Item",
+        "description": "creates one list detail",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "List to be saved",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Item"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Item"
+        ],
+        "operationId": "patchItem",
+        "summary": "Updates a List Item",
+        "description": "updates one list detail",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "List to be saved",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Item"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/item/{itemCode}": {
+      "x-swagger-router-controller": "list",
+      "parameters": [
+        {
+          "name": "itemCode",
+          "in": "path",
+          "required": true,
+          "description": "Item code",
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Item"
+        ],
+        "operationId": "deleteItem",
+        "summary": "Deletes a List Item",
+        "description": "Deletes one list detail",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "224": {
+            "description": "No Data found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "400": {
+            "description": "input data not validated",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          },
+          "500": {
+            "description": "unespected server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "description": "Common error interface",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Error code"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time of the error"
+        },
+        "message": {
+          "type": "string",
+          "description": "Error message"
+        },
+        "details": {
+          "type": "string",
+          "description": "Details of the error"
+        }
+      }
+    },
+    "Errors": {
+      "type": "array",
+      "description": "array of errors",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "List": {
+      "description": "To do list header",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Lists": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/List"
+      }
+    },
+    "Item": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": {
+          "type": "string"
+        },
+        "done": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Item"
+      }
+    }
+  }
+}
