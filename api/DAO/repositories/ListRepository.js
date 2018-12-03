@@ -1,27 +1,38 @@
-const uuid = require('uuid/v1');
 const models = require('../models');
-const db = models.sequelize;
-const {
-    list,
-    item,
-  } = models;
 
-  class ListRepository {
-    create(name, user) {
-      const data = {
-        code: uuid(),
-        name,
-        user
-      };
-      return list.create({where});
-    } 
-    read(code) {
-      let where;
-      if (code) {
-        where = {code}
-      }
-      return list.findAll({where});
-    } 
+class ListRepository {
+  constructor() {
+    const {
+      list,
+      item,
+    } = models;
+    this.list = list;
+    this.item = item;
   }
 
-  module.exports = ListRepository;
+  create(data) {
+    return this.list.create(data);
+  }
+
+  read({ code, user }) {
+    const where = [];
+    if (user) {
+      where.push({ user });
+    }
+    if (code) {
+      where.push({ code });
+    }
+    return this.list.findAll({ where });
+  }
+
+  update(data) {
+    const { code, name } = data;
+    return this.list.update({ name }, { where: { code } });
+  }
+
+  delete(code) {
+    return this.list.delete(code);
+  }
+}
+
+module.exports = ListRepository;
