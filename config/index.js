@@ -9,8 +9,8 @@ module.exports = {
     database: 'todo',
     port: 5432,
     pool: {
-      min: process.env.POSTGRES_CMM_MIN_POOL || 0,
-      max: process.env.POSTGRES_CMM_MAX_POOL || 50,
+      min: 0,
+      max: 50,
       idle: 10000,
     },
     // eslint-disable-next-line no-console
