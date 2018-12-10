@@ -32,7 +32,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
     swaggerUi: '/docs/',
   }));
 
-  const port = process.env.port || 8082;
+  const port = process.env.PORT || 8080;
   app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`ok, I´m up at http://localhost:${port}`);
