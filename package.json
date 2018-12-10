@@ -4,7 +4,8 @@
   "description": "curso",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "start:nodemon": "nodemon index.js",
     "lint": "eslint ."
   },
   "author": "",
