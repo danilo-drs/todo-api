@@ -3,6 +3,7 @@ module.exports = {
     operatorsAliases: false,
     dialect: 'postgres',
     name: 'todo',
+    connectionString: process.env.DATABASE_URL,
     host: process.env.PG_HOST || 'localhost',
     username: process.env.PG_USER || 'postgres',
     password: process.env.PG_PASS || 'danilo',

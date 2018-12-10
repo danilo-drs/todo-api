@@ -1,7 +1,12 @@
 const Sequelize = require('sequelize');
 const config = require('../../../config').db;
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+let sequelize;
+if (config.connectionString) {
+  sequelize = new Sequelize(config.connectionString);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 const db = {
   item: sequelize.import('./item'),
   list: sequelize.import('./list'),
